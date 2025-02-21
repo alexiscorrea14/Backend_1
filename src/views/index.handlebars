@@ -1,6 +1,12 @@
-<h1>Lista de Productos</h1>
-<ul>
-    {{#each productos}}
-        <li>{{this.title}} - ${{this.price}}</li>
-    {{/each}}
-</ul>
+<h1>Bienvenido a nuestra tienda</h1>
+<div class="product-container">
+  {{#each products}}
+    <div class="product-card">
+      <img src="{{this.image}}" alt="{{this.name}}">
+      <h3>{{this.name}}</h3>
+      <p>{{this.description}}</p>
+      <p>${{this.price}}</p>
+      <button onclick="addToCart('{{this._id}}')">Agregar al carrito</button>
+    </div>
+  {{/each}}
+</div>

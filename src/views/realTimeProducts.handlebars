@@ -1,11 +1,12 @@
 <h1>Productos en tiempo real</h1>
-<ul id="product-list"></ul>
-
-<script src="/socket.io/socket.io.js"></script>
-<script>
-    const socket = io();
-    socket.on("updateProducts", (products) => {
-        const list = document.getElementById("product-list");
-        list.innerHTML = products.map(p => `<li>${p.title} - $${p.price}</li>`).join("");
-    });
-</script>
+<div class="product-container">
+  {{#each products}}
+    <div class="product-card">
+      <img src="{{this.image}}" alt="{{this.name}}">
+      <h3>{{this.name}}</h3>
+      <p>{{this.description}}</p>
+      <p>${{this.price}}</p>
+      <button onclick="addToCart('{{this._id}}')">Agregar al carrito</button>
+    </div>
+  {{/each}}
+</div>

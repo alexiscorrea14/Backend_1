@@ -1,0 +1,18 @@
+<h1>Mi Carrito</h1>
+{{#if cart.products.length}}
+  <div class="cart-items">
+    {{#each cart.products}}
+      <div class="cart-item">
+        <img src="{{this.productId.image}}" alt="{{this.productId.name}}">
+        <h3>{{this.productId.name}}</h3>
+        <p>Cantidad: {{this.quantity}}</p>
+        <p>Precio: ${{this.productId.price}}</p>
+        <button onclick="removeFromCart('{{this.productId._id}}')">Eliminar</button>
+      </div>
+    {{/each}}
+  </div>
+  <button onclick="clearCart()">Vaciar carrito</button>
+  <button onclick="checkout()">Realizar pedido</button>
+{{else}}
+  <p>No tienes productos en tu carrito.</p>
+{{/if}}

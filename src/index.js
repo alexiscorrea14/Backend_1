@@ -1,39 +1,41 @@
-import express from 'express';
-import dotenv from 'dotenv';
-import connectDB from './db/config.js';
-import path from 'path'; 
-import __dirname from './utils.js'; 
-import { engine } from 'express-handlebars'; 
+const express = require('express');
+const mongoose = require('mongoose');
+const handlebars = require('express-handlebars');
+const ProductRouter = require('./routes/ProductRouter');
+const CartRouter = require('./routes/CartRouter');
+const ViewsRouter = require('./routes/ViewsRouter');
+const dotenv = require('dotenv');
 
-dotenv.config(); 
+dotenv.config();
 
 const app = express();
+const PORT = process.env.PORT || 3000;
 
 
-connectDB();
+app.engine('handlebars', handlebars());
+app.set('view engine', 'handlebars');
 
-app.engine('handlebars', engine()); 
-app.set('view engine', 'handlebars'); 
-app.set('views', path.join(__dirname, 'views')); 
 
 app.use(express.json());
-
 app.use(express.urlencoded({ extended: true }));
+app.use(express.static('public')); 
 
-app.use(express.static(path.join(__dirname, 'public')));
-
-import ProductRouter from './routes/ProductRouter.js';
-import CartRouter from './routes/CartRouter.js';
 
 app.use('/api/products', ProductRouter);
 app.use('/api/carts', CartRouter);
+app.use('/', ViewsRouter); 
 
 
-app.get('/', (req, res) => {
-  res.render('index', { title: 'Bienvenido a mi tienda' });
-});
-
-const PORT = process.env.PORT || 8080;
-app.listen(PORT, () => {
-  console.log(`Servidor corriendo en puerto ${PORT}`);
-});
+mongoose.connect(process.env.MONGO_URI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+})
+  .then(() => {
+    console.log('Conexión a la base de datos exitosa');
+    app.listen(PORT, () => {
+      console.log(`Servidor corriendo en el puerto ${PORT}`);
+    });
+  })
+  .catch((error) => {
+    console.error('Error al conectar con la base de datos', error);
+  });
