@@ -1,5 +1,5 @@
-const express = require('express');
-const ProductModel = require('../models/ProductModel');
+import express from 'express';
+import ProductModel from '../models/ProductModel.js';
 const router = express.Router();
 
 router.get('/', async (req, res) => {
@@ -38,4 +38,4 @@ router.get('/', async (req, res) => {
   }
 });
 
-module.exports = router;
+export default router;

@@ -1,6 +1,6 @@
-const express = require('express');
-const ProductModel = require('../models/ProductModel');
-const CartModel = require('../models/CartModel');
+import express from 'express';
+import ProductModel from '../models/ProductModel.js';
+import CartModel from '../models/CartModel.js';
 const router = express.Router();
 
 router.get('/', async (req, res) => {
@@ -14,7 +14,7 @@ router.get('/', async (req, res) => {
 
 router.get('/cart', async (req, res) => {
   try {
-    const cart = await CartModel.findOne({ user: req.user.id }).populate('products.productId');
+    const cart = await CartModel.findOne(); 
     res.render('cart', { cart });
   } catch (error) {
     res.status(500).json({ message: 'Error al cargar el carrito' });
@@ -30,4 +30,4 @@ router.get('/realTimeProducts', async (req, res) => {
   }
 });
 
-module.exports = router;
+export default router;

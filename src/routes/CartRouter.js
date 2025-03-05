@@ -1,5 +1,6 @@
-const express = require('express');
-const CartModel = require('../models/CartModel');
+import express from 'express';
+import CartModel from '../models/CartModel.js';
+
 const router = express.Router();
 
 router.delete('/:cid/products/:pid', async (req, res) => {
@@ -58,4 +59,4 @@ router.delete('/:cid', async (req, res) => {
   }
 });
 
-module.exports = router;
+export default router;
